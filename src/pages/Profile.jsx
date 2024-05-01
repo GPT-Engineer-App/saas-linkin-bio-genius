@@ -4,6 +4,7 @@ import { FaPlus } from "react-icons/fa";
 
 const Profile = () => {
   const [profileImage, setProfileImage] = useState("");
+  const [bio, setBio] = useState("");
   const [links, setLinks] = useState([]);
   const [newLink, setNewLink] = useState("");
   const toast = useToast();
@@ -39,6 +40,10 @@ const Profile = () => {
             <FormLabel>Upload Profile Image</FormLabel>
             <Input type="file" accept="image/*" onChange={handleImageChange} />
             {profileImage && <Image src={profileImage} alt="Profile Image" boxSize="150px" mt={4} />}
+          </FormControl>
+          <FormControl>
+            <FormLabel htmlFor="bio">Bio</FormLabel>
+            <Input id="bio" type="text" value={bio} onChange={(e) => setBio(e.target.value)} placeholder="Enter your bio" />
           </FormControl>
           <FormControl>
             <FormLabel htmlFor="link">Add New Link</FormLabel>
