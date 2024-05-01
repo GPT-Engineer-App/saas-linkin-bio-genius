@@ -33,7 +33,6 @@ const Profile = () => {
 
   return (
     <>
-      
       <Container maxW="container.md" py={10}>
         <VStack spacing={4} align="stretch">
           <FormControl>
@@ -44,7 +43,7 @@ const Profile = () => {
           <FormControl>
             <FormLabel htmlFor="link">Add New Link</FormLabel>
             <Input id="link" type="text" value={newLink} onChange={(e) => setNewLink(e.target.value)} placeholder="Enter URL" />
-            <Button leftIcon={<FaPlus />} colorScheme="blue" mt={2} onClick={handleAddLink}>
+            <Button leftIcon={<FaPlus />} colorScheme="orange" mt={2} onClick={handleAddLink}>
               Add Link
             </Button>
           </FormControl>
