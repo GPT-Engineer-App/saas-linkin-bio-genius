@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Box, Card, CardHeader, CardBody, Heading, Skeleton } from "@chakra-ui/react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
 
 const SocialGraph = () => {
@@ -11,7 +10,6 @@ const SocialGraph = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Simulated API call with mock data
         const mockData = [
           { name: "Jan", followers: 4000 },
           { name: "Feb", followers: 3000 },
@@ -21,7 +19,6 @@ const SocialGraph = () => {
           { name: "Jun", followers: 7000 },
         ];
         
-        // Simulate network delay
         await new Promise(resolve => setTimeout(resolve, 1000));
         setData(mockData);
         setIsLoading(false);
@@ -35,25 +32,36 @@ const SocialGraph = () => {
   }, []);
 
   return (
-    <motion.div
+    <Box
+      as={motion.div}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="w-full max-w-4xl mx-auto p-4"
+      maxW="4xl"
+      mx="auto"
+      p={4}
     >
-      <Card className="backdrop-blur-sm bg-white/90 dark:bg-gray-900/90 border border-gray-200 dark:border-gray-800 shadow-lg">
+      <Card
+        bg="white"
+        _dark={{ bg: "gray.900" }}
+        borderWidth="1px"
+        borderColor="gray.200"
+        _dark={{ borderColor: "gray.800" }}
+        boxShadow="lg"
+        backdropFilter="blur(8px)"
+      >
         <CardHeader>
-          <CardTitle className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+          <Heading size="lg" color="gray.900" _dark={{ color: "gray.100" }}>
             Social Growth
-          </CardTitle>
+          </Heading>
         </CardHeader>
-        <CardContent>
+        <CardBody>
           {isLoading ? (
-            <div className="w-full h-[300px]">
-              <Skeleton className="w-full h-full" />
-            </div>
+            <Box h="300px">
+              <Skeleton height="100%" />
+            </Box>
           ) : (
-            <div className="w-full h-[300px]">
+            <Box h="300px">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.1} />
@@ -87,11 +95,11 @@ const SocialGraph = () => {
                   />
                 </LineChart>
               </ResponsiveContainer>
-            </div>
+            </Box>
           )}
-        </CardContent>
+        </CardBody>
       </Card>
-    </motion.div>
+    </Box>
   );
 };
 
