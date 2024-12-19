@@ -2,9 +2,9 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 import dotenv from 'dotenv';
-
 import fs from 'fs';
 import toml from 'toml';
+import { componentTagger } from "lovable-tagger";
 
 dotenv.config();
 
@@ -27,19 +27,23 @@ if (!process.env.SUPABASE_API_KEY) {
     process.env.SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkbHpkbXhleXpydmd5Z3VtZGxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQyNDQ5NzgsImV4cCI6MjAyOTgyMDk3OH0.0vS3BzSD8sQ3mCp2EKGEI24uaNnn4S6b7FzFmranq_Y'
 }
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   server: {
-    host: "0.0.0.0",
-    port: "8080",
+    host: "::",
+    port: 8080,
   },
-  plugins: [react()],
+  plugins: [
+    react(),
+    mode === 'development' && componentTagger(),
+  ].filter(Boolean),
   base: "",
   resolve: {
     alias: {
       'lib': resolve(__dirname, 'lib'),
+      "@": resolve(__dirname, "./src"),
     },
   },
   define: {
     'process.env': process.env
   },
-});
+}));
